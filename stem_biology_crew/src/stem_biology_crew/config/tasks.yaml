@@ -1,0 +1,51 @@
+# src/crewAI_project/config/tasks.yaml
+
+navigator_task:
+  description: >
+    Identify and map user-provided skills to primary and secondary domains in
+    biology. The Navigator ensures that ambiguous or broad inputs are
+    accurately mapped to relevant subdomains, providing a clear context for
+    downstream agents.
+  expected_output: >
+    A mapping of the user's skills, providing:
+    - "Primary skill": The overarching domain, such as "Biology".
+    - "Secondary skill": A specific subdomain, such as "Immunology" or "Molecular Biology".
+  agent: navigator
+
+creator_task:
+  description: >
+    Generate a novel, graduate to post-doc level multiple-choice question based
+    on the identified primary and secondary biology skills. The prompt must
+    include:
+    1. A well-defined question.
+    2. Four answer options (A, B, C, D) with exactly one correct answer.
+    3. A detailed explanation for the correct answer.
+    4. Avoid phrases like "None of the above" or "All of the above".
+  expected_output: >
+    - A well-crafted multiple-choice question relevant to the skills.
+    - Options in the format:
+      A: "Option A"
+      B: "Option B"
+      C: "Option C"
+      D: "Option D"
+    - A detailed explanation of the correct answer.
+  agent: creator
+
+inspector_task:
+  description: >
+    Validate the generated prompt using a predefined rubric that evaluates:
+    - Clarity: Is the question clear and easy to understand?
+    - Specificity: Does the question avoid ambiguity and include all necessary details?
+    - Relevance: Is the question aligned with the identified skills?
+    - Challenge Level: Is the question appropriate for graduate to post-doc level?
+    Provide actionable feedback for improvement if the prompt does not meet
+    the highest standards.
+  expected_output: >
+    - Rubric scores for:
+      - Clarity
+      - Specificity
+      - Relevance
+      - Challenge Level
+    - A summary of strengths and weaknesses in the prompt.
+    - Constructive feedback to improve the quality of the question.
+  agent: inspector
